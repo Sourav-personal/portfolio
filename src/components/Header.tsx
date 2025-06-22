@@ -1,4 +1,5 @@
 import React from 'react';
+import '../assets/styles/main.css';
 import { useNavigate } from 'react-router-dom';
 
 type NavItem = {
@@ -45,38 +46,29 @@ const Header: React.FC = () => {
     ];
 
     return (
-        <header className="bg-gray-800 text-white p-4 sticky top-0 z-50">
-            <div className="container mx-auto">
-                <nav className="flex justify-center space-x-10 text-2xl relative">
-                    {/* Here itareting the navItems array to show all menus */}
-                    {navItems.map((item) =>
-                        item.active ? (
-                            <div key={item.name} className="relative group">
-                                {/* For presence of SubItems here block and unblock the link navigate */}
-                                {item.subItems ? (
-                                    <a className="hover:text-gray-400 cursor-default">{item.name}</a>
-                                ) : (
-                                    <a onClick={() => navigate(item.slug)} className="hover:text-gray-400 cursor-pointer"> {item.name} </a>
-                                )}
-                                {/* For presence of SubItems here itareting the subItems of navItem array*/}
-                                {item.subItems && (
-                                    <div className="absolute left-0 top-full mt-5 w-56 bg-white text-black rounded shadow-lg opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-300 ease-in-out delay-150 group-hover:delay-100 z-10">
-                                        {item.subItems.map((subItem) => (
-                                            <div
-                                                key={subItem.name}
-                                                onClick={() => navigate(subItem.slug)}
-                                                className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                                            >
-                                                {subItem.name}
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        ) : null
+        <header className='header-container'>
+            <ul className='menu-list'>
+                {/* Here itareting the navItems array to show all menus */}
+                {navItems.map((item) =>
+                    item.active ? (
+                        <li key={item.name}>
+                            {/* For presence of SubItems here block and unblock the link navigate */}
+                            {item.subItems ? (<span className='no-menu'>{item.name}</span>
+                            ) : (
+                                <a className='has-menu' onClick={() => navigate(item.slug)}>{item.name}</a>
+                            )}
+                            {/* For presence of SubItems here itareting the subItems of navItem array*/}
+                            {item.subItems && (
+                                <div className='dropdown'>
+                                    {item.subItems.map((subItem) => (
+                                    <a key={subItem.name} onClick={() => navigate(subItem.slug)} className="dropdown-item"> {subItem.name} </a>
+                                    ))}
+                                </div>
+                            )}
+                        </li>
+                    ) : null
                     )}
-                </nav>
-            </div>
+            </ul>
         </header>
     );
 };
