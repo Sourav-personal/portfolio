@@ -1,4 +1,9 @@
 :root {
+    /* unauthorize color variables */
+    --unauthorize-background: #ffffff;
+    --unauthorize-code-colour: #4f46e5;
+    --unauthorize-title-colour: #111827;
+    --unauthorize-message-colour: #4b5563;
     /* header color variables */
     --header-background: #353232;
     --header-text-colour: #ffffff;
