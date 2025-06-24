@@ -1,5 +1,5 @@
 import React from "react";
-import '../assets/styles/pages/unauthorize.css'
+import '../assets/styles/main.css'
 
 const Unauthorize: React.FC = () => {
     return (

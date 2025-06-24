@@ -11,22 +11,22 @@ const router = createBrowserRouter(
                 <Route path='' element={<Home />} />
                 <Route path='academic-qualification' element={<AcademicQualifications />} />
                 <Route path='work-experiences' element={<WorkExperiences />} />
+                <Route path='publications'>
+                    <Route path='research-articles' element={<ResearchArticles />} />
+                    <Route path='review-articles' element={<ReviewArticles />} />
+                    <Route path='book-chapters' element={<BookChapters />} />
+                    <Route path='books' element={<Books />} />
+                    <Route path='ipr' element={<IPR />} />
+                    <Route path='conference-presentation' element={<ConferencePresentation />} />
+                </Route>
                 <Route path='recognitions-awards' element={<RecognitionsAwards />} />
+                <Route path='archives'>
+                    <Route path='news' element={<News />} />
+                    <Route path='professional-memberships' element={<ProfessionalMemberships />} />
+                    <Route path='research-projects' element={<ResearchProjects />} />
+                    <Route path='photo-gallery' element={<PhotoGallery />} />
+                </Route>
                 <Route path='contact' element={<Contact />} />
-            </Route>
-            <Route path='publications' element={<MainLayout />}>
-                <Route path='research-articles' element={<ResearchArticles />} />
-                <Route path='review-articles' element={<ReviewArticles />} />
-                <Route path='book-chapters' element={<BookChapters />} />
-                <Route path='books' element={<Books />} />
-                <Route path='ipr' element={<IPR />} />
-                <Route path='conference-presentation' element={<ConferencePresentation />} />
-            </Route>
-            <Route path='archives' element={<MainLayout />}>
-                <Route path='news' element={<News />} />
-                <Route path='professional-memberships' element={<ProfessionalMemberships />} />
-                <Route path='research-projects' element={<ResearchProjects />} />
-                <Route path='photo-gallery' element={<PhotoGallery />} />
             </Route>
         </>
     )
