@@ -1,5 +1,5 @@
 import { Route, createBrowserRouter, RouterProvider, createRoutesFromElements } from 'react-router-dom'
-import { Unauthorize, Home, AcademicQualifications, WorkExperiences, RecognitionsAwards, Contact, ResearchArticles, ReviewArticles, BookChapters, Books, IPR, ConferencePresentation, News, ProfessionalMemberships, ResearchProjects, PhotoGallery } from '../pages'
+import { Unauthorize, Home, AcademicQualifications, WorkExperiences, RecognitionsAwards, Contact, ResearchArticles, ReviewArticles, BookChapters, Books, IPR, ConferencePresentation, News, ProfessionalMemberships, ResearchProjects, PhotoGallery, Login } from '../pages'
 import MainLayout from './MainLayout'
 
 
@@ -27,6 +27,7 @@ const router = createBrowserRouter(
                     <Route path='photo-gallery' element={<PhotoGallery />} />
                 </Route>
                 <Route path='contact' element={<Contact />} />
+                <Route path='login' element={<Login />} />
             </Route>
         </>
     )

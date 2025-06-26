@@ -14,6 +14,7 @@ import News from "./Ui/News";
 import ProfessionalMemberships from "./Ui/ProfessionalMemberships";
 import ResearchProjects from "./Ui/ResearchProjects";
 import PhotoGallery from "./Ui/PhotoGallery";
+import Login from "./Admin/Login";
 
 
 export{
@@ -32,5 +33,6 @@ export{
     News,
     ProfessionalMemberships,
     ResearchProjects,
-    PhotoGallery
+    PhotoGallery,
+    Login,
 }
