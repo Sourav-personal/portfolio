@@ -1,9 +1,5 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-.header-container{
+/* Existing base styles remain unchanged */
+.header-container {
     height: 3.7em;
     background-color: var(--header-background);
     font-family: 'poppins';
@@ -11,27 +7,49 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    padding: 0 1rem;
+    /* ✨ Added padding for mobile spacing */
 }
-ul{
+
+/* ✨ Wrapper for nav to allow flex layout */
+.nav-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ✨ Mobile hamburger button styles */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--header-text-colour);
+    cursor: pointer;
+}
+
+.menu-list {
     list-style-type: none;
     display: flex;
     gap: 24px;
     font-size: 20px;
 }
-li{
+
+li {
     position: relative;
 }
-.no-menu{
+
+.no-menu {
     cursor: default;
 }
-.has-menu{
+
+.has-menu {
     cursor: pointer;
 }
-.dropdown{
+
+.dropdown {
     position: absolute;
     left: 0;
     top: 100%;
@@ -45,15 +63,17 @@ li{
     flex-direction: column;
     gap: 8px;
     opacity: 0;
-    visibility:hidden;
+    visibility: hidden;
     transition: opacity 0.3s ease-in-out 0.15s, visibility 0.3s ease-in-out 0.15s;
     z-index: 10;
 }
+
 li:hover .dropdown {
     opacity: 1;
     visibility: visible;
     transition-delay: 0.1s;
 }
+
 .dropdown-item {
     padding: 0.5rem 1rem;
     cursor: pointer;
@@ -61,4 +81,45 @@ li:hover .dropdown {
 
 .dropdown-item:hover {
     background-color: var(--header-submenu-hover-background);
+}
+
+/* ✨ Responsive styles */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+        /* Show hamburger on small screens */
+    }
+
+    .menu-list {
+        flex-direction: column;
+        gap: 12px;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background-color: var(--header-background);
+        width: 100%;
+        padding: 1rem;
+        display: none;
+        /* Hidden by default */
+    }
+
+    .menu-list.open {
+        display: flex;
+        /* ✨ Show menu when toggled */
+    }
+
+    .dropdown {
+        position: static;
+        /* ✨ Make dropdown inline on mobile */
+        opacity: 1;
+        visibility: visible;
+        margin-top: 0;
+        box-shadow: none;
+        background-color: transparent;
+    }
+
+    .dropdown-item {
+        background-color: var(--header-submenu-background);
+        border-radius: 0.25rem;
+    }
 }
