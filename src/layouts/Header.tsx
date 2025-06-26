@@ -12,7 +12,7 @@ type NavItem = {
 const Header: React.FC = () => {
   const navigate = useNavigate();
 
-  // ✨ Added state to handle mobile menu toggle
+  // ✨ Mobile menu toggle state
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems: NavItem[] = [
@@ -50,27 +50,42 @@ const Header: React.FC = () => {
   return (
     <header className="header-container">
       <div className="nav-wrapper">
-        {/* ✨ Hamburger toggle for mobile */}
+        {/* ✨ Hamburger for mobile */}
         <button className="hamburger" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
           ☰
         </button>
 
-        {/* ✨ Add conditional class for mobile menu */}
         <ul className={`menu-list ${mobileMenuOpen ? 'open' : ''}`}>
           {navItems.map((item) =>
             item.active ? (
               <li key={item.name}>
+                {/* ✨ If subItems exist, do not navigate */}
                 {item.subItems ? (
                   <span className="no-menu">{item.name}</span>
                 ) : (
-                  <a className="has-menu" onClick={() => navigate(item.slug)}>
+                  <a
+                    className="has-menu"
+                    onClick={() => {
+                      navigate(item.slug);
+                      setMobileMenuOpen(false); // ✅ Close mobile menu
+                    }}
+                  >
                     {item.name}
                   </a>
                 )}
+
+                {/* ✨ Handle sub-items */}
                 {item.subItems && (
                   <div className="dropdown">
                     {item.subItems.map((subItem) => (
-                      <a key={subItem.name} onClick={() => navigate(subItem.slug)} className="dropdown-item">
+                      <a
+                        key={subItem.name}
+                        onClick={() => {
+                          navigate(subItem.slug);
+                          setMobileMenuOpen(false); // ✅ Close mobile menu
+                        }}
+                        className="dropdown-item"
+                      >
                         {subItem.name}
                       </a>
                     ))}
