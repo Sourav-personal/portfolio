@@ -13,7 +13,7 @@ export class GalleryService{
         this.storage = new Storage(this.client);
     }
 
-    async createGalleryPhoto({ title, image }: { title: string; image: string }) {
+    async createGalleryPhoto({ title, image, year }: { title: string; image?: string; year: string }) {
         try {
             return await this.databases.createDocument(
                 Config.appwrite_database_id,
@@ -21,7 +21,8 @@ export class GalleryService{
                 ID.unique(),
                 {
                     title,
-                    image
+                    image,
+                    year
                 }
             );
         } catch (error) {
@@ -46,11 +47,11 @@ export class GalleryService{
     
     async getGalleryPhotos() {
         try{
-            await this.databases.listDocuments(
+            const data = await this.databases.listDocuments(
                 Config.appwrite_database_id,
                 Config.appwrite_gallery_collection_id
             );
-            return true
+            return data
         } catch (error) {
             console.error("getGalleryPhotos:", error);
             return false
@@ -60,12 +61,12 @@ export class GalleryService{
 
     async getGalleryPhotoById(id: string) {
         try{
-            await this.databases.getDocument(
+            const data = await this.databases.getDocument(
                 Config.appwrite_database_id,
                 Config.appwrite_gallery_collection_id,
                 id
             );
-            return true
+            return data
         } catch (error) {
             console.error("getGalleryPhotoById:", error);
             return false

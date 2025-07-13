@@ -1,56 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { LoginForm } from "../../components";
+import LoginForm from "../../components/LoginForm";
 import authService from "../../services/auth";
+import { useForm } from "react-hook-form";
 
 const Login: React.FC = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { register, handleSubmit } = useForm<{email: string, password: string}>();
 
-  // ✅ Check if user is already logged in (on page load)
   useEffect(() => {
     const cookieFallback = localStorage.getItem("cookieFallback");
-    if (cookieFallback && cookieFallback != "[]") {
+    if (cookieFallback && cookieFallback !== "[]") {
       setIsLoggedIn(true);
     }
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = async (data: {email: string, password: string}) => {
     try {
-      await authService.login({
-        email: formData.email,
-        password: formData.password,
-      });
-
-      // console.log("Login successful user id:", session?.userId);
-      // console.log("Login successful email id:", session?.providerUid);
-
-      setIsLoggedIn(true); // ✅ Update state
+      await authService.login(data);
+      setIsLoggedIn(true);
     } catch (error) {
       console.error("Login failed:", error);
       alert("Invalid email or password");
     }
   };
 
-  // ✅ Logout Handler
   const handleLogout = async () => {
-    const session = await authService.logout();
+    await authService.logout();
     setIsLoggedIn(false);
-    console.log(session);
   };
 
-  // ✅ Conditional UI
   return (
     <>
       {isLoggedIn ? (
@@ -59,12 +37,7 @@ const Login: React.FC = () => {
           <button onClick={handleLogout}>Logout</button>
         </div>
       ) : (
-        <LoginForm
-          email={formData.email}
-          password={formData.password}
-          onChange={handleChange}
-          onSubmit={handleSubmit}
-        />
+        <LoginForm register={register} onSubmit={handleSubmit(onSubmit)} />
       )}
     </>
   );

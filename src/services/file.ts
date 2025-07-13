@@ -23,6 +23,7 @@ export class StorageService{
             console.error("createPhoto:", error);
         }
     }
+    
     async deletePhoto(id : string) {
         try {
             return await this.storage.deleteFile(
@@ -34,9 +35,9 @@ export class StorageService{
         }
     }
 
-    getPhotoPreview(id : string){
+    getPhotoView(id : string){
         try {
-            return this.storage.getFilePreview(
+            return this.storage.getFileView(
                 Config.appwrite_bucket_id,
                 id
             );

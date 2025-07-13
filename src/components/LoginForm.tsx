@@ -1,16 +1,13 @@
-import React from "react"
-import '../assets/styles/main.css'
-
+import React from "react";
+import type { UseFormRegister } from "react-hook-form";
+import '../assets/styles/main.css';
 
 interface LoginFormProps {
-  email: string;
-  password: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  register: UseFormRegister<{email: string, password: string}>;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-
-const LoginForm: React.FC<LoginFormProps> = ({ email, password, onChange, onSubmit }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ register, onSubmit }) => {
   return (
     <div className="form-container">
       <div className="form-box">
@@ -19,17 +16,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ email, password, onChange, onSubm
           <div className="form-input">
             <input
               type="text"
-              name="email"
-              value={email}
-              onChange={onChange}
+              {...register("email")}
               className="input"
               placeholder="Email"
             />
             <input
               type="password"
-              name="password"
-              value={password}
-              onChange={onChange}
+              {...register("password")}
               className="input"
               placeholder="Password"
             />
@@ -41,4 +34,4 @@ const LoginForm: React.FC<LoginFormProps> = ({ email, password, onChange, onSubm
   );
 };
 
-export default LoginForm
+export default LoginForm;
