@@ -1,45 +1,46 @@
-import React, { useState } from "react"
-import { LoginForm } from "../../components"
+import React, { useEffect, useState } from "react";
+import LoginForm from "../../components/LoginForm";
 import authService from "../../services/auth";
+import { useForm } from "react-hook-form";
 
 const Login: React.FC = () => {
-    const [formData, setFormData] = useState({
-      email: "",
-      password: "",
-    });
-  
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setFormData((prev) => ({
-        ...prev,
-        [e.target.name]: e.target.value,
-      }));
-    };
-  
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        try {
-            const session = await authService.login({
-            email: formData.email,
-            password: formData.password,
-            });
-            console.log("Login successful:", session);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { register, handleSubmit } = useForm<{email: string, password: string}>();
 
-            // Optional: redirect user after login
-            // navigate("/dashboard"); // if you're using react-router
-        } catch (error) {
-            console.error("Login failed:", error);
-            alert("Invalid email or password");
-        }
-    };
-  
-    return (
-      <LoginForm
-        email={formData.email}
-        password={formData.password}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-      />
-    );
+  useEffect(() => {
+    const cookieFallback = localStorage.getItem("cookieFallback");
+    if (cookieFallback && cookieFallback !== "[]") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const onSubmit = async (data: {email: string, password: string}) => {
+    try {
+      await authService.login(data);
+      setIsLoggedIn(true);
+    } catch (error) {
+      console.error("Login failed:", error);
+      alert("Invalid email or password");
+    }
   };
 
-export default Login
+  const handleLogout = async () => {
+    await authService.logout();
+    setIsLoggedIn(false);
+  };
+
+  return (
+    <>
+      {isLoggedIn ? (
+        <div style={{ textAlign: "center", marginTop: "2rem" }}>
+          <h2>You are logged in</h2>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+      ) : (
+        <LoginForm register={register} onSubmit={handleSubmit(onSubmit)} />
+      )}
+    </>
+  );
+};
+
+export default Login;
